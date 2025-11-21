@@ -18,6 +18,12 @@
       "args": [
         "--lsp"
       ]
+    },
+    "bash": {
+      "command": "bash-language-server",
+      "args": [
+        "start"
+      ]
     }
   },
   "permissions": {
@@ -25,8 +31,7 @@
       "view",
       "ls",
       "grep",
-      "edit",
-      "mcp_context7_get-library-doc"
+      "edit"
     ]
   },
   "providers": {
