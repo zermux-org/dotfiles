@@ -1,5 +1,10 @@
 {
   "$schema": "https://charm.land/crush.json",
+  "providers": {
+    "gemini": {
+      "api_key": "AIzaSyD5rusRj7eBI6XDg_N5achmvppsuiMbziw"
+    }
+  },
   "lsp": {
     "go": {
       "command": "gopls",

@@ -1,0 +1,1425 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+home/
+  dot_config/
+    crush/
+      crush.json
+    nvim/
+      lua/
+        config/
+          lazy.lua
+          lsp.lua
+        plugins/
+          snacks.lua
+      init.lua
+    private_git/
+      private_empty_config
+  dot_ssh/
+    config
+  private_dot_termux/
+    private_boot/
+      private_start-sshd
+    private_colors.properties
+    private_font.ttf
+    private_motd.sh
+    private_termux.properties
+  dot_bashrc
+  dot_inputrc
+  dot_profile
+  dot_zshrc
+openspec/
+  changes/
+    add-termux-config/
+      specs/
+        termux-config-management/
+          spec.md
+      design.md
+      proposal.md
+      tasks.md
+    add-user-authentication-module/
+      specs/
+        auth/
+          spec.md
+      proposal.md
+      tasks.md
+  AGENTS.md
+  project.md
+.chezmoiroot
+AGENTS.md
+install.sh
+README.md
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="home/private_dot_termux/private_boot/private_start-sshd">
+#!/data/data/com.termux/files/usr/bin/sh
+termux-wake-lock
+sshd
+</file>
+
+<file path="home/private_dot_termux/private_colors.properties">
+# -----------------------------------------------------------------------------
+# Theme: Tokyo Night
+# Upstream: https://github.com/folke/tokyonight.nvim/raw/main/extras/termux/tokyonight_night.properties
+# -----------------------------------------------------------------------------
+
+background: #1a1b26
+foreground: #c0caf5
+
+# Normal colors
+color0:  #15161e
+color1:  #f7768e
+color2:  #9ece6a
+color3:  #e0af68
+color4:  #7aa2f7
+color5:  #bb9af7
+color6:  #7dcfff
+color7:  #a9b1d6
+
+# Bright colors
+color8:  #414868
+color9:  #ff899d
+color10: #9fe044
+color11: #faba4a
+color12: #8db0ff
+color13: #c7a9ff
+color14: #a4daff
+color15: #c0caf5
+
+# Extended colors
+color16: #ff9e64
+color17: #db4b4b
+</file>
+
+<file path="home/private_dot_termux/private_motd.sh">
+#!/data/data/com.termux/files/usr/bin/bash
+
+ascii_art='
+___________
+\__    ___/__________  _____  __ _____  ___
+  |    |_/ __ \_  __ \/     \|  |  \  \/  /
+  |    |\  ___/|  | \/  Y Y  \  |  />    <
+  |____| \___  >__|  |__|_|  /____//__/\_ \
+             \/            \/            \/
+'
+
+# Define the color gradient (shades of cyan and blue)
+colors=(
+    '\033[38;5;81m' # Cyan
+    '\033[38;5;75m' # Light Blue
+    '\033[38;5;69m' # Sky Blue
+    '\033[38;5;63m' # Dodger Blue
+    '\033[38;5;57m' # Deep Sky Blue
+    '\033[38;5;51m' # Cornflower Blue
+    '\033[38;5;45m' # Royal Blue
+)
+
+# Split the ASCII art into lines
+IFS=$'\n' read -rd '' -a lines <<<"$ascii_art"
+
+# Print each line with the corresponding color
+for i in "${!lines[@]}"; do
+    color_index=$((i % ${#colors[@]}))
+    echo -e "${colors[color_index]}${lines[i]}"
+done
+</file>
+
+<file path="home/private_dot_termux/private_termux.properties">
+### This is a `.properties` [https://en.wikipedia.org/wiki/.properties] file
+### for termux app properties and is loaded with the `java.util.Properties.load()`
+### [https://developer.android.com/reference/java/util/Properties#load(java.io.Reader)]
+### call by the termux app and must be formatted as per its spec.
+### To make changes to a property value, uncomment the property line by removing
+### any hash `#` characters at the start of the line.
+### After making required changes, save the file and run `termux-reload-settings`
+### in the terminal for changes to take effect. Some properties require app
+### process to be restarted to be updated which can be done by force stopping
+### the app from Android app settings.
+### All information here can also be found on the
+### wiki: https://wiki.termux.com/wiki/Terminal_Settings
+
+###############
+# General
+###############
+
+### Allow external applications to execute arbitrary commands within Termux.
+### This potentially could be a security issue, so option is disabled by
+### default. Uncomment to enable.
+allow-external-apps = true
+
+### Default working directory that will be used when launching the app.
+# default-working-directory = /data/data/com.termux/files/home
+
+### Uncomment to disable toasts shown on terminal session change.
+# disable-terminal-session-change-toast = true
+
+### Uncomment to not show soft keyboard on application start.
+# hide-soft-keyboard-on-startup = true
+
+### Uncomment to let keyboard toggle button to enable or disable software
+### keyboard instead of showing/hiding it.
+# soft-keyboard-toggle-behaviour = enable/disable
+
+### Adjust terminal scrollback buffer. Max is 50000. May have negative
+### impact on performance.
+# terminal-transcript-rows = 2000
+
+### Uncomment to use volume keys for adjusting volume and not for the
+### extra keys functionality.
+# volume-keys = volume
+
+###############
+# Fullscreen mode
+###############
+
+### Uncomment to let Termux start in full screen mode.
+# fullscreen = true
+
+### Uncomment to attempt workaround layout issues when running in
+### full screen mode.
+# use-fullscreen-workaround = true
+
+###############
+# Cursor
+###############
+
+### Cursor blink rate. Values 0, 100 - 2000.
+# terminal-cursor-blink-rate = 0
+
+### Cursor style: block, bar, underline.
+# terminal-cursor-style = block
+
+###############
+# Extra keys
+###############
+
+### Settings for choosing which set of symbols to use for illustrating keys.
+### Choose between default, arrows-only, arrows-all, all and none
+# extra-keys-style = default
+
+### Force capitalize all text in extra keys row button labels.
+# extra-keys-text-all-caps = true
+
+### Default extra-key configuration
+# extra-keys = [[ESC, TAB, CTRL, ALT, {key: '-', popup: '|'}, DOWN, UP]]
+
+### Two rows with more keys
+# extra-keys = [['ESC','/','-','HOME','UP','END','PGUP'], \
+#               ['TAB','CTRL','ALT','LEFT','DOWN','RIGHT','PGDN']]
+
+### Configuration with additional popup keys (swipe up from an extra key)
+# extra-keys = [[ \
+#   {key: ESC, popup: {macro: "CTRL f d", display: "tmux exit"}}, \
+#   {key: CTRL, popup: {macro: "CTRL f BKSP", display: "tmux ←"}}, \
+#   {key: ALT, popup: {macro: "CTRL f TAB", display: "tmux →"}}, \
+#   {key: TAB, popup: {macro: "ALT a", display: A-a}}, \
+#   {key: LEFT, popup: HOME}, \
+#   {key: DOWN, popup: PGDN}, \
+#   {key: UP, popup: PGUP}, \
+#   {key: RIGHT, popup: END}, \
+#   {macro: "ALT j", display: A-j, popup: {macro: "ALT g", display: A-g}}, \
+#   {key: KEYBOARD, popup: {macro: "CTRL d", display: exit}} \
+# ]]
+
+### Another configuration with advanced popup key usage designed for more
+### specific use-cases. In this case, it is designed for working with Vim-like
+### editors for faster navigation
+#extra-keys = [ \
+#  [ \
+#    { key: ESC, popup: { macro: ":q\n", display: "QuickExit" } }, \
+#    { key: '/', popup: '\\\\' }, \
+#    { key: '-', popup: '_' }, \
+#    { key: HOME, popup: { macro: "CTRL HOME", display: "Top" } }, \
+#    { key: UP, popup: { macro: "CTRL UP", display: "UP" } }, \
+#    { key: END, popup: { macro: "CTRL END", display: "End" } }, \
+#    { key: ":", popup: ";" }, \
+#    { key: "(", popup: "{" } \
+#  ], \
+#  [ \
+#    { key: TAB, popup: { macro: ":wq\n", display: "Write And Exit" } }, \
+#    { key: CTRL, popup: { macro: ":w\n", display: "Write" } }, \
+#    ALT, \
+#    { key: LEFT, popup: { macro: "CTRL LEFT", display: "Left" } }, \
+#    { key: DOWN, popup: { macro: "CTRL DOWN", display: "Bottom" } }, \
+#    { key: RIGHT, popup: { macro: "CTRL RIGHT", display: "Right" } }, \
+#    { key: "#", popup: "$" }, \
+#    { key: ")", popup: "}" } \
+#  ] \
+#]
+
+###############
+# Colors/themes
+###############
+
+### Force black colors for drawer and dialogs
+# use-black-ui = true
+
+###############
+# HW keyboard shortcuts
+###############
+
+### Disable hardware keyboard shortcuts.
+# disable-hardware-keyboard-shortcuts = true
+
+### Open a new terminal with ctrl + t (volume down + t)
+# shortcut.create-session = ctrl + t
+
+### Go one session down with (for example) ctrl + 2
+# shortcut.next-session = ctrl + 2
+
+### Go one session up with (for example) ctrl + 1
+# shortcut.previous-session = ctrl + 1
+
+### Rename a session with (for example) ctrl + n
+# shortcut.rename-session = ctrl + n
+
+###############
+# Bell key
+###############
+
+### Vibrate device (default).
+# bell-character = vibrate
+
+### Beep with a sound.
+# bell-character = beep
+
+### Ignore bell character.
+# bell-character = ignore
+
+###############
+# Back key
+###############
+
+### Send the Escape key.
+# back-key=escape
+
+### Hide keyboard or leave app (default).
+# back-key=back
+
+###############
+# Keyboard issue workarounds
+###############
+
+### Letters might not appear until enter is pressed on Samsung devices
+# enforce-char-based-input = true
+
+### ctrl+space (for marking text in emacs) does not work on some devices
+# ctrl-space-workaround = true
+
+###############
+# Terminal Margin adjustments
+###############
+
+### Horizontal (left/right) Margin
+# terminal-margin-horizontal=3
+
+### Vertical (top/bottom) Margin
+# terminal-margin-vertical=0
+</file>
+
+<file path="openspec/changes/add-termux-config/specs/termux-config-management/spec.md">
+# Termux Configuration Management Specification
+
+This specification details the requirements for managing Termux configuration files within the chezmoi dotfiles repository.
+
+## ADDED Requirements
+
+### Requirement: Termux Configuration Source Structure
+
+Termux configuration files MUST be organized within the chezmoi source directory under `home/private_dot_termux/`, mirroring the target `~/.termux/` structure.
+
+#### Scenario: Basic configuration file placement
+
+Given a Termux configuration file `colors.properties`
+When it is placed in `home/private_dot_termux/colors.properties`
+Then `chezmoi` MUST ensure it is deployed to `~/.termux/colors.properties` on the target system.
+
+### Requirement: Secure Handling of Sensitive Termux Data
+
+Sensitive Termux configuration files MUST be prefixed with `private_` in the chezmoi source directory to leverage chezmoi's secret management capabilities.
+
+#### Scenario: Deployment of a sensitive environment file
+
+Given a sensitive Termux environment file `secrets.env`
+When it is placed in `home/private_dot_termux/private_secrets.env`
+Then `chezmoi` MUST encrypt/decrypt and deploy it to `~/.termux/secrets.env` on the target system, respecting the configured secret backend.
+
+### Requirement: Idempotent Deployment
+
+Repeated application of Termux configurations via `chezmoi apply` MUST result in the same target state without errors or unintended side effects.
+
+#### Scenario: Re-applying existing configurations
+
+Given Termux configurations have already been deployed to `~/.termux/`
+When `chezmoi apply` is executed again
+Then the target configuration files MUST remain unchanged unless modifications were made in the chezmoi source, and no errors MUST be reported due to existing files.
+
+### Requirement: Compatibility with `install.sh`
+
+The integration of Termux configurations MUST be compatible with the existing `install.sh` script, allowing for seamless initial setup and updates.
+
+#### Scenario: Initial installation with install.sh
+
+Given a fresh Termux environment
+When `install.sh` is executed
+Then all Termux configurations, including sensitive files, MUST be correctly deployed to `~/.termux/`.
+</file>
+
+<file path="openspec/changes/add-termux-config/design.md">
+# Design: Termux Configuration Integration
+
+## Overview
+
+This design outlines the integration of Termux configuration files into the existing chezmoi dotfiles repository. The primary goal is to leverage chezmoi's capabilities for consistent, version-controlled deployment and secure management of sensitive data.
+
+## Directory Structure
+
+Termux configuration files will reside under `home/private_dot_termux/` within the chezmoi source directory. This mirrors the target `~/.termux/` directory on the Termux environment.
+
+- `home/private_dot_termux/`: This directory will contain all Termux-related configuration files.
+- `home/private_dot_termux/.bashrc`: Example for a Termux-specific bash configuration.
+- `home/private_dot_termux/private_secrets.env`: Example for a file containing sensitive environment variables, which chezmoi will encrypt/decrypt using the configured secret management (e.g., pass, 1Password, LastPass).
+
+## Secret Management
+
+Sensitive Termux configurations (e.g., API keys, tokens, personal information) will be managed using chezmoi's `private_` file prefix feature. Files prefixed with `private_` in the source directory will be handled as secrets by chezmoi, typically implying encryption at rest and decryption upon deployment.
+
+### `private_secrets.env`
+
+This file will serve as a placeholder for sensitive environment variables. Users will be responsible for populating this file with their actual secrets. Chezmoi will ensure it's not committed to public repositories in plaintext.
+
+## Deployment Flow
+
+1. **Initial Setup**: The `install.sh` script, which runs `chezmoi init --apply`, will automatically deploy the Termux configurations to `~/.termux/`.
+2. **Updates**: Subsequent `chezmoi apply` or `chezmoi update` commands will synchronize any changes from the repository to the Termux environment.
+3. **Secret Handling**: Upon deployment, chezmoi will decrypt `private_` prefixed files and place them in the correct location (e.g., `~/.termux/secrets.env`), ensuring sensitive data is handled securely.
+
+## Future Considerations
+
+- **Platform-Specific Logic**: Investigate if Termux requires any specific conditional logic within chezmoi templates (e.g., using `.chezmoi.os` or `.chezmoi.hostname`) if configurations need to vary significantly across different Termux instances or other Linux environments.
+- **Plugin Management**: For Termux plugin managers (if any), consider how their configurations and plugins can be effectively managed by chezmoi.
+</file>
+
+<file path="openspec/changes/add-termux-config/proposal.md">
+# Proposal: Integrate Termux Configuration into Chezmoi
+
+## Problem
+
+The current chezmoi repository does not manage Termux specific configurations, as indicated by the untracked `home/private_dot_termux/` directory. This leads to manual management of Termux settings, which can result in inconsistencies across different Termux installations or loss of configuration if not manually backed up.
+
+## Proposed Solution
+
+Integrate the Termux configuration files into the chezmoi dotfiles repository. This will involve:
+1. Moving existing Termux configurations into the `home/private_dot_termux/` source directory within the chezmoi repository.
+2. Updating the `install.sh` script or other relevant chezmoi logic to ensure proper deployment of Termux configurations.
+3. Defining clear requirements and scenarios for managing Termux configurations, including handling sensitive data.
+
+## Goals
+
+- Ensure Termux configurations are version-controlled and deployed consistently via chezmoi.
+- Provide a clear structure for Termux dotfiles within the repository.
+- Facilitate easy setup and migration of Termux environments.
+- Address the management of sensitive Termux configurations (e.g., API keys, tokens) by using chezmoi's secret management capabilities (e.g., `private_` prefix for encrypted files).
+</file>
+
+<file path="openspec/changes/add-termux-config/tasks.md">
+# Tasks: Integrate Termux Configuration into Chezmoi
+
+This document outlines the ordered tasks required to integrate Termux configurations into the chezmoi dotfiles repository.
+
+1.  **Define Termux Configuration Management Spec**
+    *   Create `openspec/changes/add-termux-config/specs/termux-config-management/spec.md`.
+    *   Draft requirements and scenarios for Termux dotfile structure, deployment, and secure handling of sensitive data using `private_` prefix.
+    *   Ensure the spec covers the mapping from `home/private_dot_termux/` to `~/.termux/`.
+
+2.  **Move Existing Termux Configurations**
+    *   Identify existing Termux configuration files in `home/private_dot_termux/` (if any, currently untracked).
+    *   Move or copy these files into the `home/private_dot_termux/` directory within the chezmoi source.
+    *   Ensure sensitive files are renamed with the `private_` prefix as per the design.
+
+3.  **Update Chezmoi Source Directory**
+    *   Add a dummy file (e.g., `home/private_dot_termux/config`) to the chezmoi source to establish the directory structure.
+
+4.  **Verify `install.sh` for Termux Deployment**
+    *   Review `install.sh` to confirm `chezmoi init --apply` or `chezmoi apply` commands are sufficient for deploying the new Termux configurations.
+    *   No explicit changes to `install.sh` are expected unless a specific Termux-related setup step is required that chezmoi doesn't handle natively.
+
+5.  **Validate Changes with `chezmoi diff`**
+    *   Run `chezmoi diff` to preview the changes chezmoi would make to the target Termux configuration directory (`~/.termux/`).
+    *   Verify that files are correctly staged for deployment and sensitive files are appropriately managed.
+
+6.  **Apply Changes with `chezmoi apply`**
+    *   Execute `chezmoi apply` to deploy the Termux configurations to the home directory.
+    *   Verify files are in their correct locations and permissions are set as expected.
+
+7.  **Functional Testing (Manual)**
+    *   Open Termux and verify that the applied configurations (e.g., `.bashrc` changes) are active and functional.
+    *   Confirm that any simulated sensitive files are correctly handled (e.g., decrypted and present in the target location, if applicable).
+</file>
+
+<file path="openspec/changes/add-user-authentication-module/specs/auth/spec.md">
+## ADDED Requirements
+### Requirement: User Registration
+The system SHALL allow new users to register with a unique email and password.
+
+#### Scenario: Successful registration
+- **WHEN** a user provides a unique email and a strong password
+- **THEN** a new user account is created, and a success confirmation is returned.
+
+#### Scenario: Duplicate email registration
+- **WHEN** a user attempts to register with an email that is already in use
+- **THEN** the system SHALL return an error indicating the email is unavailable.
+
+### Requirement: User Login
+The system SHALL authenticate users based on their registered email and password.
+
+#### Scenario: Successful login
+- **WHEN** a user provides a registered email and correct password
+- **THEN** the system SHALL return an authentication token (e.g., JWT) for session management.
+
+#### Scenario: Invalid login credentials
+- **WHEN** a user provides an unregistered email or incorrect password
+- **THEN** the system SHALL return an error indicating invalid credentials.
+
+### Requirement: Session Management
+The system SHALL manage user sessions using authentication tokens.
+
+#### Scenario: Valid token access
+- **WHEN** a user provides a valid authentication token with a request
+- **THEN** the system SHALL grant access to protected resources.
+
+#### Scenario: Invalid token access
+- **WHEN** a user provides an invalid or expired authentication token with a request
+- **THEN** the system SHALL deny access to protected resources and prompt for re-authentication.
+</file>
+
+<file path="openspec/changes/add-user-authentication-module/proposal.md">
+# Change: Add User Authentication Module
+
+## Why
+To enable secure user access to the application by providing robust authentication capabilities. This will allow users to register, log in, and manage their sessions securely.
+
+## What Changes
+- Implement user registration functionality.
+- Implement user login and session management.
+- Add basic user data storage.
+
+## Impact
+- Affected specs: `auth`
+- Affected code: New module for authentication, potential changes to existing API endpoints or frontend components for integration.
+</file>
+
+<file path="openspec/changes/add-user-authentication-module/tasks.md">
+## 1. Implementation
+- [ ] 1.1 Design database schema for users
+- [ ] 1.2 Implement user registration API endpoint
+- [ ] 1.3 Implement user login API endpoint
+- [ ] 1.4 Implement session management (e.g., JWT token generation and validation)
+- [ ] 1.5 Add basic unit and integration tests for authentication flows
+</file>
+
+<file path="home/dot_config/nvim/lua/config/lazy.lua">
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup({
+  spec = {
+    -- add LazyVim and import its plugins
+    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+    { import = "lazyvim.plugins.extras.lang.nushell" },
+    { import = "lazyvim.plugins.extras.lang.toml" },
+    { import = "lazyvim.plugins.extras.lang.markdown" },
+    { import = "lazyvim.plugins.extras.lang.json" },
+    -- import/override with your plugins
+    { import = "plugins" },
+      {
+  "folke/tokyonight.nvim",
+  opts = {
+    transparent = true,
+    styles = {
+      sidebars = "transparent",
+      floats = "transparent",
+    },
+  },
+}
+  },
+  defaults = {
+    -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
+    -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
+    lazy = false,
+    -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
+    -- have outdated releases, which may break your Neovim install.
+    version = false, -- always use the latest git commit
+    -- version = "*", -- try installing the latest stable version for plugins that support semver
+  },
+  install = { colorscheme = { "tokyonight", "habamax" } },
+  checker = {
+    enabled = true, -- check for plugin updates periodically
+    notify = false, -- notify on update
+  }, -- automatically check for plugin updates
+  performance = {
+    rtp = {
+      -- disable some rtp plugins
+      disabled_plugins = {
+        "gzip",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
+})
+</file>
+
+<file path="home/dot_config/nvim/lua/config/lsp.lua">
+vim.lsp.enable("lua_ls")
+vim.lsp.enable("bashls")
+vim.lsp.enable("nushell")
+vim.lsp.enable("taplo")
+</file>
+
+<file path="home/dot_config/nvim/lua/plugins/snacks.lua">
+
+</file>
+
+<file path="home/dot_config/nvim/init.lua">
+require("config.lsp")
+require("config.lazy")
+</file>
+
+<file path="home/dot_ssh/config">
+Host legion
+    HostName 10.0.0.106
+    User soli-rsa
+    IdentityFile ~/.ssh/your-private-key
+</file>
+
+<file path="home/dot_bashrc">
+# Add the following line near the top of ~/.bashrc
+[[ $- == *i* ]] && source ~/.local/share/blesh/ble.sh --attach=none
+
+source ~/.profile
+
+export SHELL=bash
+export STARSHIP_SHELL=bash
+
+eval "$(starship init bash)"
+
+# argc completions and carapace if available
+if command -v argc >/dev/null 2>&1; then
+  source <(argc --argc-completions bash)
+fi
+
+if command -v carapace >/dev/null 2>&1; then
+  source <(carapace _carapace bash)
+fi
+
+# Add the following line at the end of ~/.bashrc
+[[ ! ${BLE_VERSION-} ]] || ble-attach
+</file>
+
+<file path="home/dot_inputrc">
+set meta-flag on
+set input-meta on
+set output-meta on
+set convert-meta off
+set completion-ignore-case on
+set completion-prefix-display-length 2
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+
+# Arrow keys match what you've typed so far against your command history
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\e[C": forward-char
+"\e[D": backward-char
+
+# Immediately add a trailing slash when autocompleting symlinks to directories
+set mark-symlinked-directories on
+
+# Do not autocomplete hidden files unless the pattern explicitly begins with a dot
+set match-hidden-files off
+
+# Show all autocomplete results at once
+set page-completions off
+
+# If there are more than 200 possible completions for a word, ask to show them all
+set completion-query-items 200
+
+# Show extra file information when completing, like `ls -F` does
+set visible-stats on
+
+$if Bash
+  # Be more intelligent when autocompleting by also looking at the text after
+  # the cursor.
+  set skip-completed-text on
+
+  # Coloring for Bash 4 tab completions.
+  set colored-stats on
+$endif
+</file>
+
+<file path="home/dot_zshrc">
+export SHELL=zsh
+export STARSHIP_SHELL=zsh
+
+autoload -U compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+
+eval "$(starship init zsh)"
+
+source <(carapace _carapace zsh)
+</file>
+
+<file path="openspec/AGENTS.md">
+# OpenSpec Instructions
+
+Instructions for AI coding assistants using OpenSpec for spec-driven development.
+
+## TL;DR Quick Checklist
+
+- Search existing work: `openspec spec list --long`, `openspec list` (use `rg` only for full-text search)
+- Decide scope: new capability vs modify existing capability
+- Pick a unique `change-id`: kebab-case, verb-led (`add-`, `update-`, `remove-`, `refactor-`)
+- Scaffold: `proposal.md`, `tasks.md`, `design.md` (only if needed), and delta specs per affected capability
+- Write deltas: use `## ADDED|MODIFIED|REMOVED|RENAMED Requirements`; include at least one `#### Scenario:` per requirement
+- Validate: `openspec validate [change-id] --strict` and fix issues
+- Request approval: Do not start implementation until proposal is approved
+
+## Three-Stage Workflow
+
+### Stage 1: Creating Changes
+Create proposal when you need to:
+- Add features or functionality
+- Make breaking changes (API, schema)
+- Change architecture or patterns  
+- Optimize performance (changes behavior)
+- Update security patterns
+
+Triggers (examples):
+- "Help me create a change proposal"
+- "Help me plan a change"
+- "Help me create a proposal"
+- "I want to create a spec proposal"
+- "I want to create a spec"
+
+Loose matching guidance:
+- Contains one of: `proposal`, `change`, `spec`
+- With one of: `create`, `plan`, `make`, `start`, `help`
+
+Skip proposal for:
+- Bug fixes (restore intended behavior)
+- Typos, formatting, comments
+- Dependency updates (non-breaking)
+- Configuration changes
+- Tests for existing behavior
+
+**Workflow**
+1. Review `openspec/project.md`, `openspec list`, and `openspec list --specs` to understand current context.
+2. Choose a unique verb-led `change-id` and scaffold `proposal.md`, `tasks.md`, optional `design.md`, and spec deltas under `openspec/changes/<id>/`.
+3. Draft spec deltas using `## ADDED|MODIFIED|REMOVED Requirements` with at least one `#### Scenario:` per requirement.
+4. Run `openspec validate <id> --strict` and resolve any issues before sharing the proposal.
+
+### Stage 2: Implementing Changes
+Track these steps as TODOs and complete them one by one.
+1. **Read proposal.md** - Understand what's being built
+2. **Read design.md** (if exists) - Review technical decisions
+3. **Read tasks.md** - Get implementation checklist
+4. **Implement tasks sequentially** - Complete in order
+5. **Confirm completion** - Ensure every item in `tasks.md` is finished before updating statuses
+6. **Update checklist** - After all work is done, set every task to `- [x]` so the list reflects reality
+7. **Approval gate** - Do not start implementation until the proposal is reviewed and approved
+
+### Stage 3: Archiving Changes
+After deployment, create separate PR to:
+- Move `changes/[name]/` → `changes/archive/YYYY-MM-DD-[name]/`
+- Update `specs/` if capabilities changed
+- Use `openspec archive <change-id> --skip-specs --yes` for tooling-only changes (always pass the change ID explicitly)
+- Run `openspec validate --strict` to confirm the archived change passes checks
+
+## Before Any Task
+
+**Context Checklist:**
+- [ ] Read relevant specs in `specs/[capability]/spec.md`
+- [ ] Check pending changes in `changes/` for conflicts
+- [ ] Read `openspec/project.md` for conventions
+- [ ] Run `openspec list` to see active changes
+- [ ] Run `openspec list --specs` to see existing capabilities
+
+**Before Creating Specs:**
+- Always check if capability already exists
+- Prefer modifying existing specs over creating duplicates
+- Use `openspec show [spec]` to review current state
+- If request is ambiguous, ask 1–2 clarifying questions before scaffolding
+
+### Search Guidance
+- Enumerate specs: `openspec spec list --long` (or `--json` for scripts)
+- Enumerate changes: `openspec list` (or `openspec change list --json` - deprecated but available)
+- Show details:
+  - Spec: `openspec show <spec-id> --type spec` (use `--json` for filters)
+  - Change: `openspec show <change-id> --json --deltas-only`
+- Full-text search (use ripgrep): `rg -n "Requirement:|Scenario:" openspec/specs`
+
+## Quick Start
+
+### CLI Commands
+
+```bash
+# Essential commands
+openspec list                  # List active changes
+openspec list --specs          # List specifications
+openspec show [item]           # Display change or spec
+openspec validate [item]       # Validate changes or specs
+openspec archive <change-id> [--yes|-y]   # Archive after deployment (add --yes for non-interactive runs)
+
+# Project management
+openspec init [path]           # Initialize OpenSpec
+openspec update [path]         # Update instruction files
+
+# Interactive mode
+openspec show                  # Prompts for selection
+openspec validate              # Bulk validation mode
+
+# Debugging
+openspec show [change] --json --deltas-only
+openspec validate [change] --strict
+```
+
+### Command Flags
+
+- `--json` - Machine-readable output
+- `--type change|spec` - Disambiguate items
+- `--strict` - Comprehensive validation
+- `--no-interactive` - Disable prompts
+- `--skip-specs` - Archive without spec updates
+- `--yes`/`-y` - Skip confirmation prompts (non-interactive archive)
+
+## Directory Structure
+
+```
+openspec/
+├── project.md              # Project conventions
+├── specs/                  # Current truth - what IS built
+│   └── [capability]/       # Single focused capability
+│       ├── spec.md         # Requirements and scenarios
+│       └── design.md       # Technical patterns
+├── changes/                # Proposals - what SHOULD change
+│   ├── [change-name]/
+│   │   ├── proposal.md     # Why, what, impact
+│   │   ├── tasks.md        # Implementation checklist
+│   │   ├── design.md       # Technical decisions (optional; see criteria)
+│   │   └── specs/          # Delta changes
+│   │       └── [capability]/
+│   │           └── spec.md # ADDED/MODIFIED/REMOVED
+│   └── archive/            # Completed changes
+```
+
+## Creating Change Proposals
+
+### Decision Tree
+
+```
+New request?
+├─ Bug fix restoring spec behavior? → Fix directly
+├─ Typo/format/comment? → Fix directly  
+├─ New feature/capability? → Create proposal
+├─ Breaking change? → Create proposal
+├─ Architecture change? → Create proposal
+└─ Unclear? → Create proposal (safer)
+```
+
+### Proposal Structure
+
+1. **Create directory:** `changes/[change-id]/` (kebab-case, verb-led, unique)
+
+2. **Write proposal.md:**
+```markdown
+# Change: [Brief description of change]
+
+## Why
+[1-2 sentences on problem/opportunity]
+
+## What Changes
+- [Bullet list of changes]
+- [Mark breaking changes with **BREAKING**]
+
+## Impact
+- Affected specs: [list capabilities]
+- Affected code: [key files/systems]
+```
+
+3. **Create spec deltas:** `specs/[capability]/spec.md`
+```markdown
+## ADDED Requirements
+### Requirement: New Feature
+The system SHALL provide...
+
+#### Scenario: Success case
+- **WHEN** user performs action
+- **THEN** expected result
+
+## MODIFIED Requirements
+### Requirement: Existing Feature
+[Complete modified requirement]
+
+## REMOVED Requirements
+### Requirement: Old Feature
+**Reason**: [Why removing]
+**Migration**: [How to handle]
+```
+If multiple capabilities are affected, create multiple delta files under `changes/[change-id]/specs/<capability>/spec.md`—one per capability.
+
+4. **Create tasks.md:**
+```markdown
+## 1. Implementation
+- [ ] 1.1 Create database schema
+- [ ] 1.2 Implement API endpoint
+- [ ] 1.3 Add frontend component
+- [ ] 1.4 Write tests
+```
+
+5. **Create design.md when needed:**
+Create `design.md` if any of the following apply; otherwise omit it:
+- Cross-cutting change (multiple services/modules) or a new architectural pattern
+- New external dependency or significant data model changes
+- Security, performance, or migration complexity
+- Ambiguity that benefits from technical decisions before coding
+
+Minimal `design.md` skeleton:
+```markdown
+## Context
+[Background, constraints, stakeholders]
+
+## Goals / Non-Goals
+- Goals: [...]
+- Non-Goals: [...]
+
+## Decisions
+- Decision: [What and why]
+- Alternatives considered: [Options + rationale]
+
+## Risks / Trade-offs
+- [Risk] → Mitigation
+
+## Migration Plan
+[Steps, rollback]
+
+## Open Questions
+- [...]
+```
+
+## Spec File Format
+
+### Critical: Scenario Formatting
+
+**CORRECT** (use #### headers):
+```markdown
+#### Scenario: User login success
+- **WHEN** valid credentials provided
+- **THEN** return JWT token
+```
+
+**WRONG** (don't use bullets or bold):
+```markdown
+- **Scenario: User login**  ❌
+**Scenario**: User login     ❌
+### Scenario: User login      ❌
+```
+
+Every requirement MUST have at least one scenario.
+
+### Requirement Wording
+- Use SHALL/MUST for normative requirements (avoid should/may unless intentionally non-normative)
+
+### Delta Operations
+
+- `## ADDED Requirements` - New capabilities
+- `## MODIFIED Requirements` - Changed behavior
+- `## REMOVED Requirements` - Deprecated features
+- `## RENAMED Requirements` - Name changes
+
+Headers matched with `trim(header)` - whitespace ignored.
+
+#### When to use ADDED vs MODIFIED
+- ADDED: Introduces a new capability or sub-capability that can stand alone as a requirement. Prefer ADDED when the change is orthogonal (e.g., adding "Slash Command Configuration") rather than altering the semantics of an existing requirement.
+- MODIFIED: Changes the behavior, scope, or acceptance criteria of an existing requirement. Always paste the full, updated requirement content (header + all scenarios). The archiver will replace the entire requirement with what you provide here; partial deltas will drop previous details.
+- RENAMED: Use when only the name changes. If you also change behavior, use RENAMED (name) plus MODIFIED (content) referencing the new name.
+
+Common pitfall: Using MODIFIED to add a new concern without including the previous text. This causes loss of detail at archive time. If you aren’t explicitly changing the existing requirement, add a new requirement under ADDED instead.
+
+Authoring a MODIFIED requirement correctly:
+1) Locate the existing requirement in `openspec/specs/<capability>/spec.md`.
+2) Copy the entire requirement block (from `### Requirement: ...` through its scenarios).
+3) Paste it under `## MODIFIED Requirements` and edit to reflect the new behavior.
+4) Ensure the header text matches exactly (whitespace-insensitive) and keep at least one `#### Scenario:`.
+
+Example for RENAMED:
+```markdown
+## RENAMED Requirements
+- FROM: `### Requirement: Login`
+- TO: `### Requirement: User Authentication`
+```
+
+## Troubleshooting
+
+### Common Errors
+
+**"Change must have at least one delta"**
+- Check `changes/[name]/specs/` exists with .md files
+- Verify files have operation prefixes (## ADDED Requirements)
+
+**"Requirement must have at least one scenario"**
+- Check scenarios use `#### Scenario:` format (4 hashtags)
+- Don't use bullet points or bold for scenario headers
+
+**Silent scenario parsing failures**
+- Exact format required: `#### Scenario: Name`
+- Debug with: `openspec show [change] --json --deltas-only`
+
+### Validation Tips
+
+```bash
+# Always use strict mode for comprehensive checks
+openspec validate [change] --strict
+
+# Debug delta parsing
+openspec show [change] --json | jq '.deltas'
+
+# Check specific requirement
+openspec show [spec] --json -r 1
+```
+
+## Happy Path Script
+
+```bash
+# 1) Explore current state
+openspec spec list --long
+openspec list
+# Optional full-text search:
+# rg -n "Requirement:|Scenario:" openspec/specs
+# rg -n "^#|Requirement:" openspec/changes
+
+# 2) Choose change id and scaffold
+CHANGE=add-two-factor-auth
+mkdir -p openspec/changes/$CHANGE/{specs/auth}
+printf "## Why\n...\n\n## What Changes\n- ...\n\n## Impact\n- ...\n" > openspec/changes/$CHANGE/proposal.md
+printf "## 1. Implementation\n- [ ] 1.1 ...\n" > openspec/changes/$CHANGE/tasks.md
+
+# 3) Add deltas (example)
+cat > openspec/changes/$CHANGE/specs/auth/spec.md << 'EOF'
+## ADDED Requirements
+### Requirement: Two-Factor Authentication
+Users MUST provide a second factor during login.
+
+#### Scenario: OTP required
+- **WHEN** valid credentials are provided
+- **THEN** an OTP challenge is required
+EOF
+
+# 4) Validate
+openspec validate $CHANGE --strict
+```
+
+## Multi-Capability Example
+
+```
+openspec/changes/add-2fa-notify/
+├── proposal.md
+├── tasks.md
+└── specs/
+    ├── auth/
+    │   └── spec.md   # ADDED: Two-Factor Authentication
+    └── notifications/
+        └── spec.md   # ADDED: OTP email notification
+```
+
+auth/spec.md
+```markdown
+## ADDED Requirements
+### Requirement: Two-Factor Authentication
+...
+```
+
+notifications/spec.md
+```markdown
+## ADDED Requirements
+### Requirement: OTP Email Notification
+...
+```
+
+## Best Practices
+
+### Simplicity First
+- Default to <100 lines of new code
+- Single-file implementations until proven insufficient
+- Avoid frameworks without clear justification
+- Choose boring, proven patterns
+
+### Complexity Triggers
+Only add complexity with:
+- Performance data showing current solution too slow
+- Concrete scale requirements (>1000 users, >100MB data)
+- Multiple proven use cases requiring abstraction
+
+### Clear References
+- Use `file.ts:42` format for code locations
+- Reference specs as `specs/auth/spec.md`
+- Link related changes and PRs
+
+### Capability Naming
+- Use verb-noun: `user-auth`, `payment-capture`
+- Single purpose per capability
+- 10-minute understandability rule
+- Split if description needs "AND"
+
+### Change ID Naming
+- Use kebab-case, short and descriptive: `add-two-factor-auth`
+- Prefer verb-led prefixes: `add-`, `update-`, `remove-`, `refactor-`
+- Ensure uniqueness; if taken, append `-2`, `-3`, etc.
+
+## Tool Selection Guide
+
+| Task | Tool | Why |
+|------|------|-----|
+| Find files by pattern | Glob | Fast pattern matching |
+| Search code content | Grep | Optimized regex search |
+| Read specific files | Read | Direct file access |
+| Explore unknown scope | Task | Multi-step investigation |
+
+## Error Recovery
+
+### Change Conflicts
+1. Run `openspec list` to see active changes
+2. Check for overlapping specs
+3. Coordinate with change owners
+4. Consider combining proposals
+
+### Validation Failures
+1. Run with `--strict` flag
+2. Check JSON output for details
+3. Verify spec file format
+4. Ensure scenarios properly formatted
+
+### Missing Context
+1. Read project.md first
+2. Check related specs
+3. Review recent archives
+4. Ask for clarification
+
+## Quick Reference
+
+### Stage Indicators
+- `changes/` - Proposed, not yet built
+- `specs/` - Built and deployed
+- `archive/` - Completed changes
+
+### File Purposes
+- `proposal.md` - Why and what
+- `tasks.md` - Implementation steps
+- `design.md` - Technical decisions
+- `spec.md` - Requirements and behavior
+
+### CLI Essentials
+```bash
+openspec list              # What's in progress?
+openspec show [item]       # View details
+openspec validate --strict # Is it correct?
+openspec archive <change-id> [--yes|-y]  # Mark complete (add --yes for automation)
+```
+
+Remember: Specs are truth. Changes are proposals. Keep them in sync.
+</file>
+
+<file path="openspec/project.md">
+# Project Context
+
+## Purpose
+[Describe your project's purpose and goals]
+
+## Tech Stack
+- [List your primary technologies]
+- [e.g., TypeScript, React, Node.js]
+
+## Project Conventions
+
+### Code Style
+[Describe your code style preferences, formatting rules, and naming conventions]
+
+### Architecture Patterns
+[Document your architectural decisions and patterns]
+
+### Testing Strategy
+[Explain your testing approach and requirements]
+
+### Git Workflow
+[Describe your branching strategy and commit conventions]
+
+## Domain Context
+[Add domain-specific knowledge that AI assistants need to understand]
+
+## Important Constraints
+[List any technical, business, or regulatory constraints]
+
+## External Dependencies
+[Document key external services, APIs, or systems]
+</file>
+
+<file path=".chezmoiroot">
+home
+</file>
+
+<file path="AGENTS.md">
+<!-- OPENSPEC:START -->
+# OpenSpec Instructions
+
+These instructions are for AI assistants working in this project.
+
+Always open `@/openspec/AGENTS.md` when the request:
+- Mentions planning or proposals (words like proposal, spec, change, plan)
+- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+- Sounds ambiguous and you need the authoritative spec before coding
+
+Use `@/openspec/AGENTS.md` to learn:
+- How to create and apply change proposals
+- Spec format and conventions
+- Project structure and guidelines
+
+Keep this managed block so 'openspec update' can refresh the instructions.
+
+<!-- OPENSPEC:END -->
+
+# Chezmoi Dotfiles Repository Guide
+
+This repository manages dotfiles using [chezmoi](https://www.chezmoi.io/).
+
+## Core Tools
+
+- `chezmoi`: The primary tool for managing and deploying dotfiles.
+
+## Essential Commands
+
+- **Setup/Apply Changes**:
+    ```bash
+    ./install.sh
+    ```
+    This script installs `chezmoi` if it's not found and then runs `chezmoi init --apply --source="${script_dir}"` to apply all dotfiles from this repository.
+
+- **View Pending Changes**:
+    ```bash
+    chezmoi diff
+    ```
+    Shows a diff of the changes that `chezmoi` would make to the target state. Always use this before applying changes.
+
+- **Apply Changes**:
+    ```bash
+    chezmoi apply
+    ```
+    Applies the dotfiles from the source directory to the destination (usually the home directory).
+
+- **Update and Apply**:
+    ```bash
+    chezmoi update
+    ```
+    Pulls the latest changes from the repository and applies them.
+
+## Code Organization and Structure
+
+- **`home/`**: This directory contains the source dotfiles. The structure mirrors the target home directory, with `dot_` prefixes for hidden files/directories (e.g., `home/dot_bashrc` maps to `~/.bashrc`, `home/dot_config/nvim` maps to `~/.config/nvim`).
+- **`openspec/`**: Contains specifications and change proposals for how changes should be introduced and managed within this repository. Agents should refer to this directory for guidance on structured changes.
+
+## Naming Conventions and Style Patterns
+
+- Follow existing naming conventions and style within the respective dotfiles (e.g., shell scripts, Neovim Lua configurations). When in doubt, mimic the surrounding code.
+
+## Testing Approach
+
+- The primary "testing" mechanism for dotfiles is `chezmoi diff` to review changes before they are applied to the system.
+- For Neovim configurations (`home/dot_config/nvim`), ensure that changes do not introduce syntax errors and integrate correctly by opening Neovim after applying.
+
+## Important Gotchas and Non-obvious Patterns
+
+- **Chezmoi Management**: All modifications to dotfiles should ideally be made through `chezmoi`'s source directory (`home/`). Avoid manual edits to the target files in the home directory, as they will be overwritten by `chezmoi`.
+- **OpenSpec Process**: Any significant changes or new features should follow the `openspec` proposal process, as detailed in the `openspec/AGENTS.md` file. Always check for relevant specs before implementing.
+- **`install.sh`**: This script is idempotent and safe to run multiple times for initial setup and updates.
+</file>
+
+<file path="install.sh">
+#!/bin/sh
+
+# -e: exit on error
+# -u: exit on unset variables
+set -eu
+
+if ! chezmoi="$(command -v chezmoi)"; then
+	bin_dir="${HOME}/.local/bin"
+	chezmoi="${bin_dir}/chezmoi"
+	echo "Installing chezmoi to '${chezmoi}'" >&2
+	if command -v curl >/dev/null; then
+		chezmoi_install_script="$(curl -fsSL get.chezmoi.io)"
+	elif command -v wget >/dev/null; then
+		chezmoi_install_script="$(wget -qO- get.chezmoi.io)"
+	else
+		echo "To install chezmoi, you must have curl or wget installed." >&2
+		exit 1
+	fi
+	sh -c "${chezmoi_install_script}" -- -b "${bin_dir}"
+	unset chezmoi_install_script bin_dir
+fi
+
+# POSIX way to get script's dir: https://stackoverflow.com/a/29834779/12156188
+script_dir="$(cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P)"
+
+set -- init --apply --source="${script_dir}"
+
+echo "Running 'chezmoi $*'" >&2
+# exec: replace current process with chezmoi
+exec "$chezmoi" "$@"
+</file>
+
+<file path="README.md">
+# dotfiles
+termux-specific dotfiles managed by chezmoi
+</file>
+
+<file path="home/dot_config/crush/crush.json">
+{
+  "$schema": "https://charm.land/crush.json",
+  "providers": {
+    "gemini": {
+      "api_key": "AIzaSyD5rusRj7eBI6XDg_N5achmvppsuiMbziw"
+    }
+  },
+  "lsp": {
+    "go": {
+      "command": "gopls",
+      "env": {
+        "GOTOOLCHAIN": "auto"
+      }
+    },
+    "typescript": {
+      "command": "typescript-language-server",
+      "args": [
+        "--stdio"
+      ]
+    },
+    "nushell": {
+      "command": "nu",
+      "args": [
+        "--lsp"
+      ]
+    },
+    "bash": {
+      "command": "bash-language-server",
+      "args": [
+        "start"
+      ]
+    }
+  },
+  "permissions": {
+    "allowed_tools": [
+      "view",
+      "ls",
+      "grep",
+      "edit"
+    ]
+  },
+  "providers": {
+    "ollama": {
+      "name": "Ollama",
+      "base_url": "http://localhost:11434/v1/",
+      "type": "openai-compat",
+      "models": [
+        {
+          "name": "Qwen 3",
+          "id": "qwen3:latest",
+          "context_window": 256000,
+          "default_max_tokens": 20000
+        }
+      ]
+    }
+  }
+}
+</file>
+
+<file path="home/dot_profile">
+# Set XDG environment variables (export for current session; persist in .bashrc if needed).
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
+#
+export TERMINFO=/data/data/com.termux/files/usr/share/terminfo
+export EDITOR=nvim
+export LS_COLORS="$(vivid generate tokyonight-night)"
+export PAGER=bat
+export BAT_THEME="ansi"
+export LESS="-RFMX"
+export USER="$(id -un)"
+export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.termux/bin:$PATH"
+
+export CARAPACE_MATCH=1
+export CARAPACE_BRIDGES='zsh,fish,bash'
+</file>
+
+</files>
