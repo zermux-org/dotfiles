@@ -1,0 +1,11 @@
+export SHELL=zsh
+export STARSHIP_SHELL=zsh
+
+autoload -U compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+
+eval "$(starship init zsh)"
+
+source <(carapace _carapace zsh)
