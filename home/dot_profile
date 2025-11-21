@@ -10,7 +10,7 @@ export LS_COLORS="$(vivid generate tokyonight-night)"
 export PAGER=bat
 export BAT_THEME="ansi"
 export LESS="-RFMX"
-export USER="$(id -un)"
+export USER="$(whoami)"
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.termux/bin:$PATH"
 
 export CARAPACE_MATCH=1
