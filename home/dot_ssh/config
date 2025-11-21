@@ -1,0 +1,4 @@
+Host legion
+    HostName 10.0.0.106
+    User soli-rsa
+    IdentityFile ~/.ssh/your-private-key
