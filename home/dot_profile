@@ -1,0 +1,14 @@
+# Set XDG environment variables (export for current session; persist in .bashrc if needed).
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
+#
+export TERMINFO=/data/data/com.termux/files/usr/share/terminfo
+export EDITOR=editor
+export LS_COLORS="$(vivid generate tokyonight-night)"
+export PAGER=bat
+export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.termux/bin:$PATH"
+
+export CARAPACE_MATCH=1
+export CARAPACE_BRIDGES='zsh,fish,bash'
