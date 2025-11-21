@@ -1,45 +1,71 @@
-# Termux Configuration Management Specification
+# Specification: Termux Configuration Management
 
-This specification details the requirements for managing Termux configuration files within the chezmoi dotfiles repository.
+## 1. Introduction
 
-## ADDED Requirements
+This specification details the integration of Termux-specific configuration files into the chezmoi dotfiles repository. The primary objective is to enable consistent, version-controlled deployment and secure management of Termux settings across different Android devices.
 
-### Requirement: Termux Configuration Source Structure
+## 2. Directory Structure
 
-Termux configuration files MUST be organized within the chezmoi source directory under `home/private_dot_termux/`, mirroring the target `~/.termux/` structure.
+Termux configuration files shall be organized under `home/private_dot_termux/` within the chezmoi source directory. This structure directly maps to the target `~/.termux/` directory on the Termux environment.
 
-#### Scenario: Basic configuration file placement
+- `home/private_dot_termux/`: Root for all Termux configurations.
+- `home/private_dot_termux/config`: A placeholder or general configuration file for Termux.
+- `home/private_dot_termux/colors.properties`: Example for Termux terminal color scheme.
+- `home/private_dot_termux/font.ttf`: Example for Termux terminal font.
+- `home/private_dot_termux/termux.properties`: Main Termux application settings.
+- `home/private_dot_termux/boot/start-sshd`: Example boot script for starting SSH daemon.
+- `home/private_dot_termux/private_motd.sh`: Example for a Message Of The Day script, prefixed `private_` to denote potential sensitive content or user-specific customization not intended for public sharing.
 
-Given a Termux configuration file `colors.properties`
-When it is placed in `home/private_dot_termux/colors.properties`
-Then `chezmoi` MUST ensure it is deployed to `~/.termux/colors.properties` on the target system.
+## 3. Deployment and Synchronization
 
-### Requirement: Secure Handling of Sensitive Termux Data
+### 3.1 Initial Setup
 
-Sensitive Termux configuration files MUST be prefixed with `private_` in the chezmoi source directory to leverage chezmoi's secret management capabilities.
+The `install.sh` script, which executes `chezmoi init --apply`, will be responsible for the initial deployment of Termux configurations. Chezmoi will automatically create the `~/.termux/` directory and deploy its contents based on the source files in `home/private_dot_termux/`.
 
-#### Scenario: Deployment of a sensitive environment file
+### 3.2 Updates
 
-Given a sensitive Termux environment file `secrets.env`
-When it is placed in `home/private_dot_termux/private_secrets.env`
-Then `chezmoi` MUST encrypt/decrypt and deploy it to `~/.termux/secrets.env` on the target system, respecting the configured secret backend.
+Subsequent synchronization of Termux configurations will be handled by `chezmoi apply` or `chezmoi update`. These commands will apply any changes from the source repository to the target Termux environment, ensuring configurations remain up-to-date.
 
-### Requirement: Idempotent Deployment
+### 3.3 Idempotency
 
-Repeated application of Termux configurations via `chezmoi apply` MUST result in the same target state without errors or unintended side effects.
+All chezmoi operations related to Termux configurations must be idempotent. Repeated application of configurations should not lead to errors or unintended side effects.
 
-#### Scenario: Re-applying existing configurations
+## 4. Secure Handling of Sensitive Data
 
-Given Termux configurations have already been deployed to `~/.termux/`
-When `chezmoi apply` is executed again
-Then the target configuration files MUST remain unchanged unless modifications were made in the chezmoi source, and no errors MUST be reported due to existing files.
+Sensitive Termux configurations, such as API keys, tokens, or other user-specific data, shall be managed using chezmoi's `private_` file prefix feature.
 
-### Requirement: Compatibility with `install.sh`
+### 4.1 `private_` Prefix
 
-The integration of Termux configurations MUST be compatible with the existing `install.sh` script, allowing for seamless initial setup and updates.
+Any file or directory prefixed with `private_` within `home/private_dot_termux/` will be treated as a secret by chezmoi. Chezmoi will encrypt these files at rest in the source repository and decrypt them upon deployment to the target `~/.termux/` directory.
 
-#### Scenario: Initial installation with install.sh
+Example: `home/private_dot_termux/private_motd.sh` will be deployed as `~/.termux/motd.sh`, with its content decrypted (if encrypted by chezmoi's secret management).
 
-Given a fresh Termux environment
-When `install.sh` is executed
-Then all Termux configurations, including sensitive files, MUST be correctly deployed to `~/.termux/`.
+### 4.2 User Responsibility
+
+Users are responsible for configuring chezmoi's secret management (e.g., integration with `pass`, 1Password, LastPass) to properly handle `private_` prefixed files. The repository will provide examples but will not contain plaintext sensitive data.
+
+## 5. Requirements
+
+- R1: Termux configuration files must be version-controlled within the chezmoi repository.
+- R2: Deployment of Termux configurations must be automated via `chezmoi init --apply` and `chezmoi apply`.
+- R3: The directory `home/private_dot_termux/` must map to `~/.termux/` on the target system.
+- R4: Sensitive Termux configurations must be managed securely using chezmoi's `private_` prefix.
+- R5: The system must support placeholder files for establishing directory structure without actual content.
+
+## 6. Scenarios
+
+- **Scenario 1: New Termux Installation**
+    1. User installs Termux on a new device.
+    2. User clones the chezmoi repository.
+    3. User runs `install.sh`.
+    4. Expected: `~/.termux/` is created, and all configurations from `home/private_dot_termux/` (including decrypted `private_` files) are deployed.
+
+- **Scenario 2: Updating Termux Configurations**
+    1. User modifies a Termux configuration file (e.g., `colors.properties`) in the chezmoi source.
+    2. User runs `chezmoi apply` or `chezmoi update`.
+    3. Expected: The updated `colors.properties` is deployed to `~/.termux/colors.properties`.
+
+- **Scenario 3: Handling Sensitive Data**
+    1. User adds a new sensitive script `private_script.sh` to `home/private_dot_termux/`.
+    2. User commits and pushes changes.
+    3. Expected: `private_script.sh` is encrypted in the repository. Upon deployment, it is decrypted and placed as `~/.termux/script.sh`.

@@ -19,7 +19,7 @@ Keep this managed block so 'openspec update' can refresh the instructions.
 
 # Chezmoi Dotfiles Repository Guide
 
-This repository manages dotfiles using [chezmoi](https://www.chezmoi.io/).
+This repository contains a zero-boilerplate, Git-backed, chezmoi-powered declarative configuration tool that turns your Android phone into a reproducible Terminal Development Environment.
 
 ## Core Tools
 
