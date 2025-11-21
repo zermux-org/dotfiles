@@ -1,0 +1,21 @@
+# Add the following line near the top of ~/.bashrc
+[[ $- == *i* ]] && source ~/.local/share/blesh/ble.sh --attach=none
+
+source ~/.profile
+
+export SHELL=bash
+export STARSHIP_SHELL=bash
+
+eval "$(starship init bash)"
+
+# argc completions and carapace if available
+if command -v argc >/dev/null 2>&1; then
+  source <(argc --argc-completions bash)
+fi
+
+if command -v carapace >/dev/null 2>&1; then
+  source <(carapace _carapace bash)
+fi
+
+# Add the following line at the end of ~/.bashrc
+[[ ! ${BLE_VERSION-} ]] || ble-attach
