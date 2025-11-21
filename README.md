@@ -1,54 +1,67 @@
-# Chezmoi Dotfiles Repository Guide
+# Zermux Dotfiles 🚀  
+**Your Android phone → real dev machine. Zero boilerplate. One command. Fully reproducible.**
 
-This repository contains a zero-boilerplate, Git-backed, chezmoi-powered declarative configuration tool that turns your Android phone into a reproducible Terminal Development Environment.
+<img src="https://raw.githubusercontent.com/zermux-org/dotfiles/main/screenshot.png" alt="Tokyo Night Termux with Starship + Neovim" width="100%"/>
 
-## Core Tools
+```bash
+git clone https://github.com/zermux-org/dotfiles.git && cd dotfiles && ./install.sh
+```
 
-- `chezmoi`: The primary tool for managing and deploying dotfiles.
+That’s it. 30 seconds later you have a beautiful, powerful, Git-backed terminal environment.
 
-## Essential Commands
+## What You Get (Instantly)
 
-- **Setup/Apply Changes**:
-    ```bash
-    ./install.sh
-    ```
-    This script installs `chezmoi` if it's not found and then runs `chezmoi init --apply --source="${script_dir}"` to apply all dotfiles from this repository.
+| Category           | Included Goodies                                                                                           |
+|--------------------|------------------------------------------------------------------------------------------------------------|
+| **Shell**          | Bash (ble.sh) + Zsh • Starship • Carapace completions • Modern keybindings                                 |
+| **Editor**         | Neovim + LazyVim • Tokyo Night transparent • LSPs for Lua, Bash, NuShell, TOML                             |
+| **Termux Look**    | Tokyo Night colors • Gradient ASCII MOTD • Custom font • sshd auto-start on boot                           |
+| **Termux Power**   | Optimized `termux.properties` • Wake-lock • Extra-keys ready • All configs in `~/.termux/`                 |
+| **Management**     | Chezmoi (declarative + encrypted secrets) • OpenSpec change proposals • Idempotent install.sh              |
+| **Extras**         | Crush AI config (Gemini + Ollama) • Vivid colors • Clean XDG & PATH                                        |
 
-- **View Pending Changes**:
-    ```bash
-    chezmoi diff
-    ```
-    Shows a diff of the changes that `chezmoi` would make to the target state. Always use this before applying changes.
+Everything is version-controlled, secrets stay encrypted (`private_` prefix), and `chezmoi diff` lets you preview every change.
 
-- **Apply Changes**:
-    ```bash
-    chezmoi apply
-    ```
-    Applies the dotfiles from the source directory to the destination (usually the home directory).
+## Essential Chezmoi Commands
 
-- **Update and Apply**:
-    ```bash
-    chezmoi update
-    ```
-    Pulls the latest changes from the repository and applies them.
+```bash
+./install.sh               # First-time setup (idempotent, safe to re-run)
+chezmoi diff               # Preview what will change (always do this!)
+chezmoi apply              # Apply changes
+chezmoi update             # git pull + apply latest
+```
 
-## Code Organization and Structure
+## Repository Structure
 
-- **`home/`**: This directory contains the source dotfiles. The structure mirrors the target home directory, with `dot_` prefixes for hidden files/directories (e.g., `home/dot_bashrc` maps to `~/.bashrc`, `home/dot_config/nvim` maps to `~/.config/nvim`).
-- **`openspec/`**: Contains specifications and change proposals for how changes should be introduced and managed within this repository. Agents should refer to this directory for guidance on structured changes.
+- `home/` → chezmoi source  
+  → `dot_` files become hidden (e.g. `dot_bashrc` → `~/.bashrc`)  
+  → `private_dot_termux/` → becomes `~/.termux/` (with secret support)
+- `openspec/` → formal spec-driven change process (see AGENTS.md)
 
-## Naming Conventions and Style Patterns
+## Important Rules (Never Fight Chezmoi)
 
-- Follow existing naming conventions and style within the respective dotfiles (e.g., shell scripts, Neovim Lua configurations). When in doubt, mimic the surrounding code.
+- Edit files inside this repo only → never touch `~/.*` directly (they’ll be overwritten)
+- Secrets go in `private_*` files → chezmoi encrypts them with your backend (1Password, pass, Bitwarden…)
+- Big changes? Follow the OpenSpec process in `openspec/` — keeps everything safe and reviewable
 
-## Testing Approach
+## Roadmap
 
-- The primary "testing" mechanism for dotfiles is `chezmoi diff` to review changes before they are applied to the system.
-- For Neovim configurations (`home/dot_config/nvim`), ensure that changes do not introduce syntax errors and integrate correctly by opening Neovim after applying.
+| Version | Features                                                                                 | Status     |
+|---------|------------------------------------------------------------------------------------------|------------|
+| v1.0    | Current: Core Termux + Neovim + Shells + Chezmoi + OpenSpec                              | Released   |
+| v1.1    | Smart extra-keys rows • Taskfile.yml runner                                              | Next       |
+| v1.2    | Tmux + auto-resurrect • Lazygit + delta                                                  | Planned    |
+| v1.3    | Proot-distro manager • Docker-in-Termux toolkit                                          | Planned    |
+| v1.4    | Local AI suite (Ollama + Continue.dev)                                                   | Planned    |
+| v1.5    | Automated git + restic backups                                                           | Planned    |
+| v2.0    | Multi-device sync • Web dashboard                                                        | Dream      |
 
-## Important Gotchas and Non-obvious Patterns
+## Contributing
 
-- **Chezmoi Management**: All modifications to dotfiles should ideally be made through `chezmoi`'s source directory (`home/`). Avoid manual edits to the target files in the home directory, as they will be overwritten by `chezmoi`.
-- **OpenSpec Process**: Any significant changes or new features should follow the `openspec` proposal process, as detailed in the `openspec/AGENTS.md` file. Always check for relevant specs before implementing.
-- **`install.sh`**: This script is idempotent and safe to run multiple times for initial setup and updates.
+1. Fork
+2. Create an OpenSpec proposal in `openspec/changes/`
+3. PR → merge → profit
 
+Star ★ this repo if you believe every Android phone deserves real tools.
+
+**Zermux.org — Because phones can code too.**
