@@ -5,7 +5,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 #
 export TERMINFO=/data/data/com.termux/files/usr/share/terminfo
-export EDITOR=editor
+export EDITOR=nvim
 export LS_COLORS="$(vivid generate tokyonight-night)"
 export PAGER=bat
 export PATH="$HOME/.local/bin:$HOME/go/bin:$HOME/.cargo/bin:$HOME/.termux/bin:$PATH"
